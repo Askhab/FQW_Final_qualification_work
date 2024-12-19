@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--Общие простые типы данных-->
+	<xs:include schemaLocation="P_AllSimpleType_v03.xsd"/>
+	<!--КЛАССИФИКАТОРЫ И СПРАВОЧНИКИ:-->
+	<!--Перечень наименований материалов наружных стен здания, применяемый при ведении Единого государственного реестра объектов капитального строительства-->
+	<xs:include schemaLocation="dWall_v02.xsd"/>
+	<!--Справочник типов основных характеристик-->
+	<xs:include schemaLocation="dTypeParameter_v01.xsd"/>
+	<!--Подсхема ХАРАКТЕРИСТИКИ ОБЪЕКТОВ КАПИТАЛЬНОГО СТРОИТЕЛЬСТВА-->
+	<xs:complexType name="tElementsConstruct">
+		<xs:annotation>
+			<xs:documentation>Материал наружных стен здания</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="tElementsConstructCode">
+				<xs:sequence>
+					<xs:element name="DifferentWall" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Иной материал стен (текстовое описание)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="tElementsConstructCode">
+		<xs:annotation>
+			<xs:documentation>Материал наружных стен здания (в соответствии со справочником)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Material" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Материал стен в соответствии со справочником</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Wall" type="dWall" use="required">
+						<xs:annotation>
+							<xs:documentation>Материал стен</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tExploitationChar">
+		<xs:annotation>
+			<xs:documentation>Эксплуатационные характеристики</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="YearBuilt" type="i4" use="optional">
+			<xs:annotation>
+				<xs:documentation>Год завершения строительства</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CenturyPeriod" type="sNe1000">
+			<xs:annotation>
+				<xs:documentation>Век (период) постройки</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="YearUsed" type="i4" use="optional">
+			<xs:annotation>
+				<xs:documentation>Год ввода в эксплуатацию по завершении строительства</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="tFloors">
+		<xs:annotation>
+			<xs:documentation>Количество этажей</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Floors" type="sNe200" use="required">
+			<xs:annotation>
+				<xs:documentation>Количество этажей</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="UndergroundFloors" type="s200">
+			<xs:annotation>
+				<xs:documentation>В том числе подземных этажей</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!--===Основные характеристики без погрешности-->
+	<xs:complexType name="tKeyParameters">
+		<xs:annotation>
+			<xs:documentation>Основные характеристики</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="KeyParameter" type="tKeyParameter" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Основная характеристика</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tKeyParameter">
+		<xs:annotation>
+			<xs:documentation>Основная характеристика</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Type" type="dTypeParameter" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип характеристики</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Value" type="dPos23_1" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение (величина в метрах (кв. метрах для площади, куб. метрах для объема))</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!--===Для сооружения,  в т.ч. незавершенного строительством-->
+	<xs:complexType name="tKeyParametersInc">
+		<xs:annotation>
+			<xs:documentation>Основные характеристики и средняя квадратическая погрешность определения площади, площади застройки</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="KeyParameter" type="tKeyParameterInc" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Основная характеристика и средняя квадратическая погрешность определения площади, площади застройки</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tKeyParameterInc">
+		<xs:annotation>
+			<xs:documentation>Основная характеристика и средняя квадратическая погрешность определения площади, площади застройки</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Type" type="dTypeParameter" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип характеристики</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Value" type="dPos23_1" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение (величина в метрах (кв. метрах для площади, куб. метрах для объема))</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Inaccuracy" type="d23_1">
+			<xs:annotation>
+				<xs:documentation>Погрешность определения площади, площади застройки</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!--===Для части сооружения (протяженность, объем, площадь, площадь застройки)-->
+	<xs:complexType name="tKeyParametersSubObject">
+		<xs:annotation>
+			<xs:documentation>Основные характеристики части</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="KeyParameterSubObject" type="tKeyParameterSubObject" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Основная характеристика части (протяженность, площадь)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tKeyParameterSubObject">
+		<xs:annotation>
+			<xs:documentation>Основная характеристика части (протяженность, площадь, площадь застройки)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Type" use="required">
+			<xs:annotation>
+				<xs:documentation>Тип характеристики (протяженность, площадь, площадь застройки)</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="dTypeParameter">
+					<xs:pattern value="01"/>
+					<xs:pattern value="05"/>
+					<xs:pattern value="06"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Value" type="dPos23_1" use="required">
+			<xs:annotation>
+				<xs:documentation>Значение (величина в метрах для протяженности, кв. метрах для площади, площади застройки)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Inaccuracy" type="d23_1">
+			<xs:annotation>
+				<xs:documentation>Погрешность определения площади, площади застройки</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<!--===Площадь здания, сооружения, помещения, машино-места-->
+	<xs:complexType name="tAreaOKS">
+		<xs:annotation>
+			<xs:documentation>Площадь с округлением до 0,1 кв. м, погрешность определения площади</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Area" type="dPos21_1">
+				<xs:annotation>
+					<xs:documentation>Площадь в квадратных метрах с округлением до 0,1 кв. м</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inaccuracy" type="d21_1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Погрешность определения площади</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

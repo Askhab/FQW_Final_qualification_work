@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--Все простые типы данных-->
+	<xs:include schemaLocation="P_AllSimpleType_v03.xsd"/>
+	<!--Справочник "Вид объекта в едином государственном реестре объектов культурного наследия"-->
+	<xs:include schemaLocation="dCultural_v01.xsd"/>
+	<!--======================================================================-->
+	<!--Подсхема "ОБЪЕКТЫ КУЛЬТУРНОГО НАСЛЕДИЯ"-->
+	<xs:complexType name="tAssignmentEGROKN">
+		<xs:annotation>
+			<xs:documentation>Сведения об отнесении объекта недвижимости к выявленным объектам культурного наследия, подлежащим государственной охране до принятия решения о включении его в ЕГРОКН</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegNum" type="sNe40">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер учётной карты</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ObjCultural" type="dCultural">
+				<xs:annotation>
+					<xs:documentation>Вид объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameCultural" type="sNe255">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tInclusionEGROKN">
+		<xs:annotation>
+			<xs:documentation>Сведения о включении объекта недвижимости в ЕГРОКН</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegNum" type="sNe40">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ObjCultural" type="dCultural">
+				<xs:annotation>
+					<xs:documentation>Вид объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameCultural" type="sNe255">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tCulturalHeritageEGROKN">
+		<xs:annotation>
+			<xs:documentation>Объект культурного наследия (ОКН)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ObjCultural" type="dCultural">
+				<xs:annotation>
+					<xs:documentation>Вид объекта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NameCultural" type="sNe255">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegNumber" type="sNe40">
+				<xs:annotation>
+					<xs:documentation>Регистрационный номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequirementsEnsure" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Требования к сохранению, содержанию и использованию, обеспечению доступа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
